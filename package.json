@@ -1,0 +1,17 @@
+{
+  "name": "securiot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "crypto-js": "^4.1.1",
+    "firebase": "^10.3.1",
+    "inquirer": "^9.2.11"
+  }
+}
