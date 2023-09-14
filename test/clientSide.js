@@ -1,20 +1,15 @@
-const { sendMessage } = require('./messageSender');
-const { registerUser, loginUser } = require('./authentication');
+const { sendMessage } = require('../src/function/messageSender');
+const { registerUser, loginUser } = require('../src/auth/authentication');
 const readline = require('readline');
 const { initializeApp } = require('firebase/app');
 const { getDatabase, ref, onChildAdded } = require('firebase/database');
-const { decrypt } = require('./encryption');
+const { decrypt } = require('./../src/function/encryption');
+const firebaseConfig = require('../src/firebase/firebaseconfig');
 
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
 });
-
-const firebaseConfig = {
-  apiKey: "AIzaSyAkE9Gs-7V94g4qpbnlt89f7LZuIrJI3i8",
-  authDomain: "securiot-68355.firebaseapp.com",
-  databaseURL: 'https://securiot-68355-default-rtdb.asia-southeast1.firebasedatabase.app/',
-};
 
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
@@ -41,7 +36,7 @@ async function loginOrRegister() {
                 console.log('Registered and logged in successfully.');
 
                 // Start retrieving and decrypting messages loop
-                retrieveAndDecryptMessages(email);
+                retrieveAndDecryptMessages(email,password);
               } catch (registrationError) {
                 console.error('Registration error:', registrationError.message);
                 rl.close();
@@ -60,12 +55,12 @@ async function loginOrRegister() {
   }
 }
 
-function retrieveAndDecryptMessages(email) {
+function retrieveAndDecryptMessages(email,password) {
   const messagesRef = ref(database, 'messages/' + email.replace('.', '_'));
 
   onChildAdded(messagesRef, (snapshot) => {
     const encryptedMessage = snapshot.val().message;
-    const decryptedMessage = decrypt(encryptedMessage);
+    const decryptedMessage = decrypt(encryptedMessage ,password);
     console.log('Decrypted Message:', decryptedMessage);
   });
 }

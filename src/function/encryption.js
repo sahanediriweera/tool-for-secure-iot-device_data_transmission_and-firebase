@@ -1,9 +1,12 @@
 // encryption.js
 const CryptoJS = require('crypto-js');
+require('dotenv').config();
 
-const secretKey = 'your-secret-key';
+
+const secretKey = process.env.SECRETKEY;
 
 function encrypt(message) {
+  
   const encrypted = CryptoJS.AES.encrypt(message, secretKey).toString();
   return encrypted;
 }

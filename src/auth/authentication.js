@@ -2,12 +2,8 @@
 const { initializeApp } = require('firebase/app');
 const { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } = require('firebase/auth');
 const { getDatabase, ref, child, get, set } = require('firebase/database');
+const firebaseConfig = require('../firebase/firebaseconfig');
 
-const firebaseConfig = {
-  apiKey: "AIzaSyAkE9Gs-7V94g4qpbnlt89f7LZuIrJI3i8",
-  authDomain: "securiot-68355.firebaseapp.com",
-  databaseURL: 'https://securiot-68355-default-rtdb.asia-southeast1.firebasedatabase.app/',
-};
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);

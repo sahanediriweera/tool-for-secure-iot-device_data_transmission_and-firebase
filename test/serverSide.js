@@ -1,5 +1,5 @@
-const { sendMessage } = require('./messageSender');
-const { registerUser, loginUser } = require('./authentication');
+const { sendMessage } = require('../src/function/messageSender');
+const { registerUser, loginUser } = require('../src/auth/authentication');
 const readline = require('readline');
 
 const rl = readline.createInterface({
@@ -29,7 +29,7 @@ async function loginOrRegister() {
                 console.log('Registered and logged in successfully.');
 
                 // Start sending messages loop
-                sendMessagesLoop(email);
+                sendMessagesLoop(email,password);
               } catch (registrationError) {
                 console.error('Registration error:', registrationError.message);
                 rl.close();
@@ -48,7 +48,7 @@ async function loginOrRegister() {
   }
 }
 
-async function sendMessagesLoop(email) {
+async function sendMessagesLoop(email,password) {
     while (true) {
       rl.setPrompt('Enter the message to send (or type "exit" to quit): ');
       rl.prompt();
@@ -60,7 +60,7 @@ async function sendMessagesLoop(email) {
             rl.close();
           } else {
             // Send the message
-            sendMessage(email, message);
+            sendMessage(email, message,password);
             console.log('Message sent successfully.');
           }
           // Add a delay to avoid flooding the input with messages
